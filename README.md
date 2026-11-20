@@ -3,26 +3,27 @@
 Mod klienta, który sam wysyła `/tpaccept`, gdy dostaniesz prośbę o teleportację.
 
 ## Sterowanie
-- **GUI** – klawisz `O` albo `/autotpa gui` (przełącznik ON/OFF, opóźnienie, whitelista)
+- **GUI** – klawisz `O` albo `/autotpa gui`: przełącznik ON/OFF, komenda akceptująca, delay,
+  whitelista i własny tekst prośby
 - **ON/OFF** – klawisz `K` albo `/autotpa` (przełącza), `/autotpa on`, `/autotpa off`
 - `/autotpa status` – aktualne ustawienia
 - `/autotpa delay <ticki>` – opóźnienie przed akceptacją (20 ticków = 1 s)
 - `/autotpa command <komenda>` – inna komenda niż `tpaccept` (np. `tpyes`)
+- `/autotpa text <fragment>` – własny fragment wiadomości, po którym mod rozpozna prośbę
 - `/autotpa whitelist add|remove|list|clear [nick]` – akceptuj tylko wybranych graczy
+- `/autotpa debug` – wypisuje na czacie każdą wiadomość z serwera (do diagnozy)
 
-Klawisze zmienisz w *Opcje → Sterowanie → AutoTPA*.
+## Jak mod rozpoznaje prośbę
+Mod reaguje, gdy wiadomość z serwera zawiera: komendę akceptującą z ukośnikiem (np. „wpisz /tpaccept”),
+Twój własny tekst z GUI albo jeden ze wzorców z `config/autotpa.json`. Domyślnie mod jest **wyłączony**,
+więc włącz go przyciskiem w GUI lub klawiszem `K`.
 
-## Konfiguracja
-Plik `config/autotpa.json`. Pole `patterns` to lista wyrażeń (regex), po których mod rozpoznaje
-prośbę o tpa. Jeśli Twój serwer pisze inaczej, dopisz tam fragment jego wiadomości.
+Jeśli nic się nie dzieje: włącz `/autotpa debug`, poproś kogoś o tpa i zobacz, jak dokładnie wygląda
+wiadomość serwera. Wpisz jej fragment w GUI w polu „Własny tekst prośby”.
 
 ## Budowanie
-1. Zainstaluj JDK 21.
-2. Najprościej: pobierz szablon z https://fabricmc.net/develop/template/ (dla 1.21.4), a potem
-   podmień w nim `src/`, `build.gradle`, `gradle.properties` plikami z tego folderu
-   (dzięki temu masz gotowego `gradlew`).
-3. `./gradlew build` → gotowy jar w `build/libs/autotpa-1.0.0.jar`.
-4. Wrzuć jar do `.minecraft/mods` razem z Fabric API i Fabric Loaderem.
+Wrzuć projekt na GitHub – workflow `.github/workflows/build.yml` zbuduje jar (zakładka Actions →
+Artifacts). Lokalnie: JDK 21 i `./gradlew build`, jar w `build/libs/`.
 
 ## Uwaga
 Część serwerów zakazuje automatyzacji w regulaminie – sprawdź zasady przed użyciem.
